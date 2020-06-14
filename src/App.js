@@ -5,12 +5,15 @@ import './App.css';
 import Title from './components/title'
 import TotalFunds from './components/totalFunds'
 import SliderBar from './components/sliderBar'
+import SliderBar2 from './components/sliderBar2'
 import { groups } from './dummy_data/groups'
 
 function App() {
   const [ funds, setFunds ] = useState(1000000000)
   const [ percentage, setPercentage] = useState([0, 0, 0, 0])
-  const [totalPercentage, setTotalPercentage] = useState(0)
+
+  const [ totalPercentage, setTotalPercentage] = useState(0)
+
 
   //for (i =0; i != percentage.length ; i ++){
   //i / 100 = totalPercentage 
@@ -25,6 +28,8 @@ function App() {
     percentage[index] = value //set percentage array with new percentage at teh index of group chosen by slider
     
     setPercentage([...percentage.slice(0, index), value, ...percentage.slice(index+1)])
+
+
     let totalValue = percentage.reduce((result, percent) => result + percent)
     //console.log(totalValue)
     
@@ -32,6 +37,7 @@ function App() {
     //console.log(newFunds)
 
     setFunds(newFunds) //set value of funs to new calculated value
+
   }
 
   const groupSections = groups.map( (group, idx) => {
@@ -40,6 +46,16 @@ function App() {
         <p>{group}: </p>
         <SliderBar handlePercentage={handlePercentage} idx={idx}/>
         <p>Percentage: {percentage[idx]}</p>
+      </div>
+    )
+  })
+
+  const groupSections2 = groups.map( (group, idx) => {
+    return (
+      <div key={idx} style={{display: 'flex'}}>
+        <p>{group}: </p>
+        <SliderBar2 />
+        <p>Percentage: TBD</p>
       </div>
     )
   })
@@ -53,6 +69,10 @@ function App() {
         <TotalFunds funds={funds} />
         <div style={{ display: 'flex', flexDirection: 'column'}}>
           {groupSections}
+        </div>
+        <div>Total Percentage: {totalPercentage}%</div>
+        <div style={{ display: 'flex', flexDirection: 'column'}}>
+          {groupSections2}
         </div>
       </header>
     </div>
