@@ -25,12 +25,12 @@ data['angle'] = data['value']/data['value'].sum() * 2*pi
 data['color'] = Spectral[len(x1)]
 
 # Figure 1
-p1 = figure(plot_height=800, title="Total Funds", toolbar_location=None,
+p1 = figure(plot_height=300, title="Total Funds", toolbar_location=None,
         tools="hover", tooltips="@service: @percent")
 
 p1.wedge(x=0, y=1, radius=0.4,
         start_angle=cumsum('angle', include_zero=True), end_angle=cumsum('angle'),
-        line_color=None, fill_color='color', legend='service', source=data)
+        line_color=None, fill_color='color', source=data)
 
 p1.axis.axis_label=None
 p1.axis.visible= False
@@ -54,7 +54,7 @@ data2['angle'] = data2['impact']/data2['impact'].sum() * 2*pi
 data2['color'] = Spectral[len(x1)]
 
 # Figure 2
-p2 = figure(plot_height=800, title="Impacted People", toolbar_location=None,
+p2 = figure(plot_height=300, title="Impacted People", toolbar_location=None,
         tools="hover", tooltips="@service: @impacted")
 
 
@@ -66,6 +66,23 @@ p2.axis.axis_label=None
 p2.axis.visible=False
 p2.grid.grid_line_color = None
 
+#---------------------------------------------- Legend
+legend = figure(plot_height = 300, plot_width = 200, title="Legend", toolbar_location=None)
+
+#created in order to incude legend annotation --> no wedge actually displayed here
+legend.wedge(x=0, y=0, radius=0,
+        start_angle=cumsum("angle"), end_angle=cumsum("angle"),
+        line_color=None, fill_color='color', legend='service', source=data)
+
+legend.legend.location = "center"
+
+legend.axis.axis_label=None
+legend.axis.visible=False
+legend.grid.grid_line_color = None
+
+
+
+
 
 # Display
-show(row(p1, p2))
+show(row(p1, legend, p2))
