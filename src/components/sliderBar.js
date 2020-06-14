@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Slider, Rail, Handles, Tracks, Ticks } from "react-compound-slider";
 
-function Handle({ handle: { id, value, percent }, getHandleProps, handlePercentage }) {
-  handlePercentage(value)
+function Handle({ handle: { id, value, percent }, getHandleProps, handlePercentage, idx }) {
+  // console.log(getHandleProps)
   return (
     <div
       style={{
@@ -21,6 +21,8 @@ function Handle({ handle: { id, value, percent }, getHandleProps, handlePercenta
         color: 'white',
       }}
       {...getHandleProps(id)}
+     onMouseUp={e => handlePercentage(e, value)}
+     id={idx}
     >
       <div style={{ fontFamily: 'Roboto', fontSize: 15, marginTop: -20 }}>
         {value}
@@ -48,12 +50,13 @@ function Track({ source, target, getTrackProps }) {
   )
 }
 
-function SliderBar({ handlePercentage }) {
+function SliderBar({ handlePercentage, idx }) {
   const sliderStyle = {  // Give the slider some width
     position: 'relative',
-    width: '50%',
+    width: '20rem',
     height: 80,
-    border: '1px solid steelblue',
+    // border: '1px solid steelblue',
+    margin: '0 2rem 0 2rem'
   }
 
   const railStyle = {
@@ -69,7 +72,7 @@ function SliderBar({ handlePercentage }) {
     <Slider
       rootStyle={sliderStyle /* inline styles for the outer div. Can also use className prop. */}
       domain={[0, 100]}
-      values={[10]}
+      values={[0]}
       step={1}
     >
       <div style={railStyle /* Add a rail as a child.  Later we'll make it interactive. */} />
@@ -82,6 +85,7 @@ function SliderBar({ handlePercentage }) {
                 handle={handle}
                 getHandleProps={getHandleProps}
                 handlePercentage={handlePercentage}
+                idx={idx}
               />
             ))}
           </div>
