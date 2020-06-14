@@ -1,12 +1,14 @@
 from math import pi
 
 import pandas as pd
+import json
 
 from bokeh.io import output_file, show
 from bokeh.palettes import Spectral
 from bokeh.plotting import figure
 from bokeh.transform import cumsum
 from bokeh.layouts import row
+from bokeh.embed import json_item
 
 #---------------------------------------------- Fig. 1
 
@@ -85,4 +87,8 @@ legend.grid.grid_line_color = None
 
 
 # Display
-show(row(p1, legend, p2))
+output = row(p1, legend, p2)
+item_text = json.dumps(json_item(output, "myplot"))
+f = open("./src/data/bokeh_data.json", "a")
+f.write(item_text)
+f.close()
