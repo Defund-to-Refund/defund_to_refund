@@ -19,8 +19,8 @@ const railInnerStyle = {
   backgroundColor: 'rgb(155,155,155)',
 }
 
-const domain = [100, 500]
-const defaultValues = [150]
+const domain = [0, 100]
+const defaultValues = [0]
 
 class SliderBar2 extends Component {
   state = {
@@ -41,6 +41,7 @@ class SliderBar2 extends Component {
       state: { values, update },
     } = this
 
+    console.log(this.state.update)
     return (
         <Slider
           mode={1}
