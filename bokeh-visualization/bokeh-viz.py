@@ -8,7 +8,7 @@ from bokeh.plotting import figure
 from bokeh.transform import cumsum
 from bokeh.layouts import row
 
-output_file("pie.html")
+# output_file("pie.html")
 
 # imported values
 value = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
