@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import Bokeh from '@bokeh/bokehjs'
+
 import Title from './components/title'
 import TotalFunds from './components/totalFunds'
 import SliderBar from './components/sliderBar'
@@ -10,9 +10,13 @@ import { groups } from './dummy_data/groups'
 import bokeh_data from './data/bokeh_data.json'
 
 class App extends React.Component {
-  state = {
-    funds: 1000000000,
-    percentage: [0, 0, 0, 0]
+  constructor (props) {
+    super(props);
+    this.state = {
+      funds: 1000000000,
+      percentage: [0, 0, 0, 0],
+      dataset: 1
+    }
   }
 
   handlePercentage = (e, value) => {
@@ -20,8 +24,15 @@ class App extends React.Component {
     this.setState({percentage: [...this.state.percentage.slice(0, index), value, ...this.state.percentage.slice(index + 1)]})
   }
 
+
   componentDidMount(){
-    Bokeh.embed.embed_item(bokeh_data);
+    window.Bokeh.embed.embed_item(bokeh_data /*1 */, 'myplot');
+  }
+
+  componentDidUpdate(){
+   if(this.state.dataset == 1) {
+    window.Bokeh.embed.embed_item(bokeh_data /*1 */, 'myplot');
+   }
   }
 
   render() {
