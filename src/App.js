@@ -11,20 +11,33 @@ import { groups } from './dummy_data/groups'
 function App() {
   const [ funds, setFunds ] = useState(1000000000)
   const [ percentage, setPercentage] = useState([0, 0, 0, 0])
+
   const [ totalPercentage, setTotalPercentage] = useState(0)
 
+
+  //for (i =0; i != percentage.length ; i ++){
+  //i / 100 = totalPercentage 
+  // totalPercentage * funds = setFunds
+  //funds - setFunds = funds
+  //TotalFunds = funds
+
+  //}
+  
   const handlePercentage = (e, value) => {
     let index = parseInt(e.target.id, 10)
+    percentage[index] = value //set percentage array with new percentage at teh index of group chosen by slider
+    
     setPercentage([...percentage.slice(0, index), value, ...percentage.slice(index+1)])
-    let sum = 0
-    for (let i = 0; i < percentage.length; i++) {
-      if (i !== index) {
-        sum += percentage[i]
-      } else {
-        sum += value
-      }
-    }
-    setTotalPercentage(sum)
+
+
+    let totalValue = percentage.reduce((result, percent) => result + percent)
+    //console.log(totalValue)
+    
+    let newFunds = 1000000000 - (1000000000 * (totalValue / 100)) //logic to recalc funds based off percentage lost
+    //console.log(newFunds)
+
+    setFunds(newFunds) //set value of funs to new calculated value
+
   }
 
   const groupSections = groups.map( (group, idx) => {
@@ -67,3 +80,5 @@ function App() {
 }
 
 export default App;
+
+
