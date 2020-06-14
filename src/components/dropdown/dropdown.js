@@ -38,7 +38,6 @@ showDropdownMenu(event) {
          <li style={{ color: 'black'}} value="1" onClick={this.props.handleDataSet}>Graph 1</li>
          <li style={{ color: 'black'}} value="2" onClick={this.props.handleDataSet}>Graph 2</li>
          <li style={{ color: 'black'}} value="3" onClick={this.props.handleDataSet}>Graph 3</li>
-         <li style={{ color: 'black'}} value="4" onClick={this.props.handleDataSet}>Graph 4</li>
           </ul>
         ):
         (

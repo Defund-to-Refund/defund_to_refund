@@ -7,10 +7,9 @@ import Title from './components/title'
 import TotalFunds from './components/totalFunds'
 import SliderBar from './components/sliderBar'
 import { groups } from './dummy_data/groups'
-// import bokeh_data1 from './data/bokeh_data.json'
-// import bokeh_data2 from './data/bokeh_data.json'
-// import bokeh_data3 from './data/bokeh_data.json'
-import bokeh_data4 from './data/bokeh_data4.json'
+import bokeh_data_1 from './data/bokeh_data_1.json'
+import bokeh_data_2 from './data/bokeh_data_2.json'
+import bokeh_data_3 from './data/bokeh_data_3.json'
 import Dropdown from './components/dropdown/dropdown'
 
 class App extends React.Component {
@@ -19,13 +18,19 @@ class App extends React.Component {
     this.state = {
       funds: 1000000000,
       percentage: [0, 0, 0, 0],
-      dataset: 1
+      dataset: 0,
+      totalPercentage: 0
     }
   }
 
   handlePercentage = (e, value) => {
     let index = parseInt(e.target.id, 10)
+    this.state.percentage[index] = value
     this.setState({percentage: [...this.state.percentage.slice(0, index), value, ...this.state.percentage.slice(index + 1)]})
+    let totalValue = this.state.percentage.reduce((result, percent) => result + percent)
+    let newFunds = 1000000000 - (1000000000 * (totalValue / 100)) //logic to recalc funds based off percentage lost
+    this.setState({funds: newFunds})
+    this.setState({totalPercentage: totalValue})
   }
 
   handleDataSet = (e) => {
@@ -38,19 +43,12 @@ class App extends React.Component {
   }
   */
   componentDidUpdate(){
-    /*
    if(this.state.dataset == 1) {
-     window.Bokeh.embed.embed_item(bokeh_data1, 'myplot');
+     window.Bokeh.embed.embed_item(bokeh_data_1, 'myplot');
     } else if (this.state.dataset == 2) {
-      window.Bokeh.embed.embed_item(bokeh_data2, 'myplot')
+      window.Bokeh.embed.embed_item(bokeh_data_2, 'myplot')
     } else if (this.state.dataset == 3) {
-      window.Bokeh.embed.embed_item(bokeh_data3, 'myplot')
-    } else if (this.state.dataset == 4) {
-      window.Bokeh.embed.embed_item(bokeh_data4, 'myplot')
-    }
-    */
-    if(this.state.dataset === 4) {
-      window.Bokeh.embed.embed_item(bokeh_data4, 'myplot');
+      window.Bokeh.embed.embed_item(bokeh_data_3, 'myplot')
     }
   }
 
@@ -84,6 +82,8 @@ class App extends React.Component {
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {groupSections}
           </div>
+          <div>Total Percentage: {this.state.totalPercentage}%</div>
+          <br />
           <Dropdown handleDataSet={this.handleDataSet}/>
           <br />
           <div id="myplot" />
